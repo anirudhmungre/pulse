@@ -9,8 +9,8 @@ if (!DB_URI) {
 }
 
 export default {
- schema: './src/lib/db/schema/*',
- out: './src/lib/server/db/migrations',
+ schema: './db/schema/*',
+ out: './db/migrations',
  driver: 'pg',
  dbCredentials: {
   connectionString: DB_URI
