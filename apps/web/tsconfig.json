@@ -1,0 +1,22 @@
+{
+	"extends": [
+		"../../configs/tsconfig.json",
+		"./.svelte-kit/tsconfig.json"
+	],
+	"include": [
+		"src/**/*"
+	],
+	"compilerOptions": {
+		"outDir": "./dist", // Specify the output directory for your compiled files
+		"rootDir": "./src", // Specify the root directory of your source files
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"moduleResolution": "bundler",
+	}
+}
