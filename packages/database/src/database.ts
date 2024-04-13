@@ -3,7 +3,7 @@ import postgres from 'postgres';
 import * as dotenv from 'dotenv';
 import * as schema from './schema';
 
-dotenv.config({ path: '../../.env' });
+dotenv.config({ path: '../../configs/.env' });
 
 const connectionString = process.env.DATABASE_URI || '';
 const client = postgres(connectionString);

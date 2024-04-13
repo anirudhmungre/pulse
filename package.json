@@ -6,7 +6,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:studio": "npm run db:studio --workspace database",
+    "db:studio": "turbo run db:studio",
     "db:check": "turbo run db:check",
     "db:generate": "turbo run db:generate",
     "db:migrate": "turbo run db:migrate"
@@ -14,5 +14,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
 }
