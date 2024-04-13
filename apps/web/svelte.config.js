@@ -15,7 +15,7 @@ const config = {
 		env: {
 			dir: '../../configs'
 		}
-	},
+	}
 };
 
 export default config;
