@@ -3,6 +3,7 @@
 	import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 	export let items: any[] = [];
+	export let chipValueFn: (item: any) => string;
 	export let action: 'none' | 'remove' = 'none';
 
 	const removeItem = (item) => {
@@ -20,7 +21,7 @@
 	{#each items as item}
 		<li>
 			<button type="button" class="badge badge-accent gap-2" on:click={() => performAction(item)}>
-				{item.name}
+				{chipValueFn(item)}
 				{#if action === 'remove'}
 					<Fa icon={faClose} />
 				{/if}

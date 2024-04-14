@@ -3,8 +3,12 @@
 	import Fa from 'svelte-fa';
 	import { faArrowRight, faHeart } from '@fortawesome/free-solid-svg-icons';
 	import MultiSelectInput from '$lib/core/components/MultiSelectInput.svelte';
+	import type { User } from 'database';
 
 	let vitalsGroup: any[] = [];
+
+	let peopleInputValue: string;
+	let people: User[] = [];
 
 	const VITALS = [
 		{
@@ -15,9 +19,19 @@
 				'The Health Check tracks your teams happiness over time. Teams with high health are more productive and have less turnover'
 		}
 	];
+
+	const searchUsers = async () => {
+		const response = await fetch(`/users/${peopleInputValue}`);
+		if (!response.ok) {
+			people = [];
+		} else {
+			const data = await response.json();
+			people = data;
+		}
+	};
 </script>
 
-<form method="post" class="prose grid grid-cols-2" use:enhance>
+<form method="post" class="prose grid grid-cols-2 gap-2" use:enhance>
 	<header class="col-span-full">
 		<h1>Configure your checkup 🩺</h1>
 	</header>
@@ -38,7 +52,15 @@
 				<span class="label-text-alt">What is your teams identity? Be creative!</span>
 			</footer>
 		</label>
-		<MultiSelectInput name="members" labelFooter="Who belongs on your team?"></MultiSelectInput>
+		<MultiSelectInput
+			bind:inputValue={peopleInputValue}
+			bind:items={people}
+			searchFn={searchUsers}
+			dropDownValueFn={(item) => `${item.name} (${item.email})`}
+			chipValueFn={(item) => `${item.name}`}
+			name="members"
+			labelFooter="Who belongs on your team?"
+		></MultiSelectInput>
 	</section>
 
 	<fieldset class="col-span-full">
@@ -74,7 +96,7 @@
 	</fieldset>
 
 	<section class="col-span-full place-self-end">
-		<button type="submit" class="btn btn-primary btn-primary">
+		<button type="submit" class="btn btn-primary">
 			Let's go <Fa icon={faArrowRight} />
 		</button>
 	</section>

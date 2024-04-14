@@ -1,7 +1,10 @@
 <script lang="ts">
-	import _ from 'lodash';
 	import ChipList from './ChipList.svelte';
 
+	export let searchFn: () => any;
+	export let dropDownValueFn: (item: any) => string;
+	export let chipValueFn: (item: any) => string;
+	export let inputValue = '';
 	export let placeholder = 'Search...';
 	export let name: string;
 	export let labelFooter: string = '';
@@ -18,13 +21,7 @@
 		{ value: 'en', name: 'Enland' }
 	];
 
-	let inputValue = '';
 	let show = false;
-
-	const updateOptions = (e) => {
-		show = true;
-		console.log(inputValue);
-	};
 
 	let selected: any[] = [];
 	const selectOption = (select) => {
@@ -46,19 +43,27 @@
 			selected = selected.filter((o) => o !== select);
 		}
 	};
+
+	let timeout: NodeJS.Timeout;
+	const handleSearch = async () => {
+		if (timeout) clearTimeout(timeout);
+
+		timeout = setTimeout(searchFn, 500);
+	};
 </script>
 
 <label class="label-text capitalize" for={name}>{name}</label>
-<ChipList bind:items={selected} action="remove" />
+<ChipList bind:items={selected} action="remove" {chipValueFn} />
 <div class="form-control h-full w-full">
 	<div class="dropdown w-full">
 		<input
 			type="search"
 			name={name + '-search'}
 			class="input input-bordered w-full"
+			bind:value={inputValue}
 			on:blur={() => (show = false)}
 			on:click={() => (show = !show)}
-			on:input={_.debounce(updateOptions, 500)}
+			on:input={() => handleSearch()}
 			on:change
 			on:focus
 			on:keydown
@@ -70,21 +75,24 @@
 			on:paste
 			{placeholder}
 		/>
-		<ul
-			class="menu dropdown-content bg-base-200 text-base-content rounded-box not-prose z-[1] gap-y-1 p-2 shadow"
-		>
-			{#each items as item}
-				<li>
-					<button
-						type="button"
-						class:active={selected.includes(item)}
-						on:click={() => selectOption(item)}
-					>
-						{item.name}
-					</button>
-				</li>
-			{/each}
-		</ul>
+		{#if items.length > 0}
+			<ul
+				class="menu dropdown-content bg-base-200 text-base-content rounded-box not-prose z-[1] gap-y-1 p-2 shadow"
+			>
+				{#each items as item}
+					<li>
+						<button
+							type="button"
+							class="btn"
+							class:btn-accent={selected.includes(item)}
+							on:click={() => selectOption(item)}
+						>
+							{dropDownValueFn(item)}
+						</button>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 	</div>
 	<footer class="label">
 		<label class="label-text-alt" for={name}>{labelFooter}</label>
