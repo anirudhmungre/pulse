@@ -1,11 +1,116 @@
 {
-  "id": "80445b34-ce2b-4cd1-8eed-d99db5a86914",
+  "id": "3842b9ea-0074-4550-9f1d-969a871ad5f0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
-    "health_checks": {
-      "name": "health_checks",
+    "account": {
+      "name": "account",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "name": "providerAccountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token_type": {
+          "name": "token_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_state": {
+          "name": "session_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "account_userId_user_id_fk": {
+          "name": "account_userId_user_id_fk",
+          "tableFrom": "account",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "account_provider_providerAccountId_pk": {
+          "name": "account_provider_providerAccountId_pk",
+          "columns": [
+            "provider",
+            "providerAccountId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "health_check": {
+      "name": "health_check",
       "schema": "",
       "columns": {
         "id": {
@@ -14,15 +119,15 @@
           "primaryKey": true,
           "notNull": true
         },
-        "retro_id": {
-          "name": "retro_id",
+        "retroId": {
+          "name": "retroId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "userId": {
+          "name": "userId",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -32,8 +137,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -42,12 +147,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "health_checks_retro_id_retros_id_fk": {
-          "name": "health_checks_retro_id_retros_id_fk",
-          "tableFrom": "health_checks",
-          "tableTo": "retros",
+        "health_check_retroId_retro_id_fk": {
+          "name": "health_check_retroId_retro_id_fk",
+          "tableFrom": "health_check",
+          "tableTo": "retro",
           "columnsFrom": [
-            "retro_id"
+            "retroId"
           ],
           "columnsTo": [
             "id"
@@ -55,12 +160,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "health_checks_user_id_users_id_fk": {
-          "name": "health_checks_user_id_users_id_fk",
-          "tableFrom": "health_checks",
-          "tableTo": "users",
+        "health_check_userId_user_id_fk": {
+          "name": "health_check_userId_user_id_fk",
+          "tableFrom": "health_check",
+          "tableTo": "user",
           "columnsFrom": [
-            "user_id"
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -72,8 +177,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "items": {
-      "name": "items",
+    "item": {
+      "name": "item",
       "schema": "",
       "columns": {
         "id": {
@@ -82,15 +187,15 @@
           "primaryKey": true,
           "notNull": true
         },
-        "retro_id": {
-          "name": "retro_id",
+        "retroId": {
+          "name": "retroId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "userId": {
+          "name": "userId",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -106,8 +211,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -116,12 +221,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "items_retro_id_retros_id_fk": {
-          "name": "items_retro_id_retros_id_fk",
-          "tableFrom": "items",
-          "tableTo": "retros",
+        "item_retroId_retro_id_fk": {
+          "name": "item_retroId_retro_id_fk",
+          "tableFrom": "item",
+          "tableTo": "retro",
           "columnsFrom": [
-            "retro_id"
+            "retroId"
           ],
           "columnsTo": [
             "id"
@@ -129,12 +234,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "items_user_id_users_id_fk": {
-          "name": "items_user_id_users_id_fk",
-          "tableFrom": "items",
-          "tableTo": "users",
+        "item_userId_user_id_fk": {
+          "name": "item_userId_user_id_fk",
+          "tableFrom": "item",
+          "tableTo": "user",
           "columnsFrom": [
-            "user_id"
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -146,8 +251,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "retros": {
-      "name": "retros",
+    "retro": {
+      "name": "retro",
       "schema": "",
       "columns": {
         "id": {
@@ -162,14 +267,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "owner_id": {
-          "name": "owner_id",
-          "type": "integer",
+        "ownerId": {
+          "name": "ownerId",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -178,12 +283,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "retros_owner_id_users_id_fk": {
-          "name": "retros_owner_id_users_id_fk",
-          "tableFrom": "retros",
-          "tableTo": "users",
+        "retro_ownerId_user_id_fk": {
+          "name": "retro_ownerId_user_id_fk",
+          "tableFrom": "retro",
+          "tableTo": "user",
           "columnsFrom": [
-            "owner_id"
+            "ownerId"
           ],
           "columnsTo": [
             "id"
@@ -195,13 +300,62 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "session": {
+      "name": "session",
+      "schema": "",
+      "columns": {
+        "sessionToken": {
+          "name": "sessionToken",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "session_userId_user_id_fk": {
+          "name": "session_userId_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -209,7 +363,7 @@
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "email": {
           "name": "email",
@@ -217,8 +371,20 @@
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -228,6 +394,49 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "verificationToken": {
+      "name": "verificationToken",
+      "schema": "",
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "verificationToken_identifier_token_pk": {
+          "name": "verificationToken_identifier_token_pk",
+          "columns": [
+            "identifier",
+            "token"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     }
   },

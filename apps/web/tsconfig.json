@@ -3,9 +3,6 @@
 		"../../configs/tsconfig.json",
 		"./.svelte-kit/tsconfig.json"
 	],
-	"include": [
-		"src/**/*"
-	],
 	"compilerOptions": {
 		"rootDir": "../",
 		"allowJs": true,

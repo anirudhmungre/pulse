@@ -1,10 +1,11 @@
 <script lang="ts">
-	import LogoutButton from '$lib/auth/components/LogoutButton.svelte';
 	import { page } from '$app/stores';
-	import { Button } from 'flowbite-svelte';
+	import LogoutButton from '$lib/auth/components/LogoutButton.svelte';
 </script>
 
-<Button href="/app">App</Button>
+<a href="/" class="btn btn-primary">App</a>
 {#if $page.data.session}
 	<LogoutButton />
-{:else}{/if}
+{:else}
+	<span>No user logged in</span>
+{/if}

@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { Button, Input } from 'flowbite-svelte';
-	import { GoogleSolid } from 'flowbite-svelte-icons';
+	import Fa from 'svelte-fa';
+	import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 	export let provider: 'google';
 
 	const providerStyleMap = {
 		google: {
 			color: 'red',
-			icon: GoogleSolid
+			icon: faGoogle
 		}
 	};
 </script>
 
 <form method="POST" action="/login">
-	<Input type="hidden" name="providerId" value={provider} />
-	<Button type="submit" color="red" class="w-full min-w-min">
-		<svelte:component this={providerStyleMap[provider].icon} class="me-2" />Sign in with {provider}
-	</Button>
+	<input type="hidden" name="providerId" value={provider} />
+	<div class="form-control">
+		<button type="submit" class="btn btn-block">
+			<Fa icon={providerStyleMap[provider].icon} />
+			<span>Continue with <span class="capitalize">{provider}</span></span>
+		</button>
+	</div>
 </form>
-
-<style>
-</style>

@@ -1,8 +1,3 @@
-<script>
-	import { Span } from 'flowbite-svelte';
-</script>
-
-<Span
-	gradientClass="text-transparent bg-clip-text bg-gradient-to-r to-pink-600 from-orange-400"
-	gradient>pulse</Span
->
+<span class="bg-gradient-to-r from-orange-400 to-pink-600 bg-clip-text text-transparent">
+	pulse
+</span>

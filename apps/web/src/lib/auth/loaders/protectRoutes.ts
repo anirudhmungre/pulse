@@ -1,8 +1,9 @@
 import { redirect, type Handle } from "@sveltejs/kit";
 
+const UNAUTHENTICATED_ROUTES = ['/login', '/signup'];
+
 export const protectRoutes: Handle = async ({ event, resolve }) => {
-  // Protect any routes under /app
-	if (event.url.pathname.startsWith('/app')) {
+	if (!UNAUTHENTICATED_ROUTES.includes(event.url.pathname)) {
     const session = await event.locals.auth();
      if (!session) {
        throw redirect(303, '/login');

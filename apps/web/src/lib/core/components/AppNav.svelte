@@ -1,24 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import LogoutButton from '$lib/auth/components/LogoutButton.svelte';
-	import {
-		Navbar,
-		NavBrand,
-		NavLi,
-		NavUl,
-		NavHamburger,
-		Avatar,
-		Dropdown,
-		DropdownItem,
-		DropdownHeader,
-		Heading,
-		DarkMode,
-		GradientButton
-	} from 'flowbite-svelte';
 	import Logo from './Logo.svelte';
+	import Fa from 'svelte-fa';
+	import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 	$: user = $page.data.session?.user;
-	$: activeUrl = $page.url.pathname;
 
 	const initials = $page.data.session?.user?.name
 		?.split(' ')
@@ -26,40 +13,39 @@
 		.join('');
 </script>
 
-<Navbar>
-	<NavBrand href="/app">
-		<Heading tag="h1" class="self-center whitespace-nowrap">
-			<Logo></Logo>
-		</Heading>
-	</NavBrand>
-
-	<div class="flex items-center md:order-2">
-		<div class="mr-4 flex items-center">
-			<div class="flex items-center">
-				<DarkMode />
-			</div>
-			<GradientButton href="/app/checkup/new" color="pinkToOrange" class="ml-4">
-				Start a Checkup
-			</GradientButton>
-		</div>
-		{#if user?.image}
-			<Avatar id="avatar-menu" src={user.image}></Avatar>
-		{:else}
-			<Avatar id="avatar-menu">{initials}</Avatar>
-		{/if}
-		<NavHamburger class1="w-full md:flex md:w-auto" />
+<header class="navbar">
+	<div class="navbar-start">
+		<a class="btn btn-ghost text-3xl font-bold" href="/"><Logo /></a>
 	</div>
-	<Dropdown placement="bottom" triggeredBy="#avatar-menu">
-		<DropdownHeader>
-			<span class="block text-sm">{user?.name}</span>
-			<span class="block truncate text-sm font-medium">{user?.email}</span>
-		</DropdownHeader>
-		<DropdownItem activeClass="dark:hover:bg-inherit">Settings</DropdownItem>
-		<DropdownItem slot="footer"><LogoutButton></LogoutButton></DropdownItem>
-	</Dropdown>
-	<NavUl {activeUrl}>
-		<NavLi href="/app">Dashboard</NavLi>
-		<NavLi href="/app/team">Team</NavLi>
-		<NavLi href="/app/docs">Docs</NavLi>
-	</NavUl>
-</Navbar>
+	<div class="navbar-end gap-2">
+		<label class="btn btn-ghost btn-circle swap swap-rotate">
+			<!-- this hidden checkbox controls the state -->
+			<input type="checkbox" class="theme-controller hidden" value="dark" />
+			<Fa icon={faSun} class="swap-off" />
+			<Fa icon={faMoon} class="swap-on" />
+		</label>
+		<a class="btn btn-primary" href="/checkup/new"> Start a checkup </a>
+		<div class="dropdown dropdown-end">
+			<button class="btn btn-base-200 btn-circle avatar">
+				{#if user?.image}
+					<img src={user.image} alt="User avatar" class="rounded-full" />
+				{:else}
+					{initials}
+				{/if}
+			</button>
+			<div class="dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-2 shadow">
+				<div>
+					<span class="block text-sm">{user?.name}</span>
+					<span class="block text-sm font-medium">{user?.email}</span>
+				</div>
+				<hr />
+				<ul class="menu menu-sm">
+					<li><a href="/dashboard">Dashboard</a></li>
+					<li><a href="/settings">Settings</a></li>
+				</ul>
+				<hr class="mb-2" />
+				<LogoutButton />
+			</div>
+		</div>
+	</div>
+</header>

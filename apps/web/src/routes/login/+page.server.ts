@@ -6,6 +6,6 @@ export const actions: Actions = { default: signIn };
 
 export const load: PageServerLoad = async (event) => {
   const session = await event.locals.auth();
-  if (session?.user) throw redirect(303, '/app');
+  if (session?.user) throw redirect(303, '/');
   return {};
 }
