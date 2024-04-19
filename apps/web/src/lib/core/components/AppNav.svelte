@@ -33,7 +33,7 @@
 					{initials}
 				{/if}
 			</button>
-			<div class="dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-2 shadow">
+			<div class="dropdown-content bg-base-200 rounded-box z-[1] mt-3 p-2 shadow">
 				<div>
 					<span class="block text-sm">{user?.name}</span>
 					<span class="block text-sm font-medium">{user?.email}</span>

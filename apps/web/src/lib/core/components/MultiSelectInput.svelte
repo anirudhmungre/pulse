@@ -4,6 +4,7 @@
 	export let searchFn: () => any;
 	export let dropDownValueFn: (item: any) => string;
 	export let chipValueFn: (item: any) => string;
+	export let formValueFn: (item: any) => string;
 	export let inputValue = '';
 	export let placeholder = 'Search...';
 	export let name: string;
@@ -25,17 +26,11 @@
 
 	let selected: any[] = [];
 	const selectOption = (select) => {
-		console.log(select);
 		if (selected.includes(select)) {
 			clearThisOption(select);
 		} else {
 			if (!selected.includes(select)) selected = [...selected, select];
 		}
-	};
-
-	const clearAll = (e) => {
-		e.stopPropagation();
-		selected = [];
 	};
 
 	const clearThisOption = (select) => {
@@ -54,6 +49,9 @@
 
 <label class="label-text capitalize" for={name}>{name}</label>
 <ChipList bind:items={selected} action="remove" {chipValueFn} />
+{#each selected as value}
+	<input type="hidden" {name} value={formValueFn(value)} />
+{/each}
 <div class="form-control h-full w-full">
 	<div class="dropdown w-full">
 		<input

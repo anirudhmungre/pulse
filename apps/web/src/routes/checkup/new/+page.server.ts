@@ -11,6 +11,6 @@ export const actions: Actions = {
       return fail(400, {validation: {name, missing: true}});
     }
 
-    return redirect(302, "/app/checkup/new");
+    return redirect(302, "/checkup/new");
   }
 }

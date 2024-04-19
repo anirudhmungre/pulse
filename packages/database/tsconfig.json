@@ -9,7 +9,8 @@
     "src/**/*.ts"
   ],
   "compilerOptions": {
-    "rootDir": "../",
+    "rootDir": ".",
     "baseUrl": ".",
+    "outDir": "dist",
   }
 }

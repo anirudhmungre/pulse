@@ -7,7 +7,6 @@
       "dom",
       "esnext"
     ], // Include DOM and latest ECMAScript features
-    "outDir": "../dist", // Redirect output structure to the directory
     "tsBuildInfoFile": "./.tsbuildinfo",
     "allowJs": false, // Do not allow JavaScript files to be compiled
     "checkJs": false, // Disable type-checking of JS files (useful if allowJs is true)

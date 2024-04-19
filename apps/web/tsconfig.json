@@ -4,7 +4,8 @@
 		"./.svelte-kit/tsconfig.json"
 	],
 	"compilerOptions": {
-		"rootDir": "../",
+		"rootDir": ".",
+		"outDir": "dist",
 		"allowJs": true,
 		"checkJs": true,
 		"esModuleInterop": true,

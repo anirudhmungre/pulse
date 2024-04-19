@@ -45,7 +45,7 @@
 				type="text"
 				name="name"
 				class="input input-bordered w-full"
-				placeholder="The productive pythons 🐍"
+				placeholder="ex. The productive pythons 🐍"
 				required
 			/>
 			<footer class="label">
@@ -58,7 +58,9 @@
 			searchFn={searchUsers}
 			dropDownValueFn={(item) => `${item.name} (${item.email})`}
 			chipValueFn={(item) => `${item.name}`}
-			name="members"
+			formValueFn={(item) => `${item.email}`}
+			name="invites"
+			placeholder="ex. anirudh.mungre@amunco.com"
 			labelFooter="Who belongs on your team?"
 		></MultiSelectInput>
 	</section>
